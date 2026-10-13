@@ -67,16 +67,16 @@ HLCtrlPar = [theta_tgt l_clr alpha_tgt alpha_cd alpha_cv];
 % Stance Leg Control %
 %%%%%%%%%%%%%%%%%%%%%%
 
-% 0: prestimulations
-St_PreSHFL          = parStCtrl(1)      *0.01; %[]
-St_PreSGLU          = parStCtrl(2)      *0.01; %[]
-St_PreSHAM          = parStCtrl(3)      *0.01; %[]
-St_PreSRF           = parStCtrl(4)      *0.01;
-St_PreSVAS          = parStCtrl(5)      *0.05; %[]
-St_PreSBFSH         = parStCtrl(6)      *0.01;
-St_PreSGAS          = parStCtrl(7)      *0.01;
-St_PreSSOL          = parStCtrl(8)      *0.01;
-St_PreSTA           = parStCtrl(9)      *0.01;
+% 0: pre-excitations
+St_PreEHFL          = parStCtrl(1)      *0.01; %[]
+St_PreEGLU          = parStCtrl(2)      *0.01; %[]
+St_PreEHAM          = parStCtrl(3)      *0.01; %[]
+St_PreERF           = parStCtrl(4)      *0.01;
+St_PreEVAS          = parStCtrl(5)      *0.05; %[]
+St_PreEBFSH         = parStCtrl(6)      *0.01;
+St_PreEGAS          = parStCtrl(7)      *0.01;
+St_PreESOL          = parStCtrl(8)      *0.01;
+St_PreETA           = parStCtrl(9)      *0.01;
 
 % M1: realize compliant leg
 St_FGain_GLU      	= parStCtrl(10)     *0.5;
@@ -110,9 +110,9 @@ St_LGainTA          = parStCtrl(29)     *1.1;
 St_FGainSOL_TA      = parStCtrl(30)     *0.4;
 
 % pass control parameters to Simulink
-StPreStim           =   ...
-    [St_PreSHFL St_PreSGLU St_PreSHAM St_PreSRF St_PreSVAS ...
-    St_PreSBFSH St_PreSGAS St_PreSSOL St_PreSTA];
+StPreExc           =   ...
+    [St_PreEHFL St_PreEGLU St_PreEHAM St_PreERF St_PreEVAS ...
+    St_PreEBFSH St_PreEGAS St_PreESOL St_PreETA];
 
 St_M1       = [St_FGain_GLU St_FGain_VAS St_FGain_SOL];
 St_M2       = [St_FGain_HAM St_loffBFSH_VAS St_LGainBFSH_VAS St_loffBFSH St_LGain_BFSH St_FGain_GAS];
@@ -121,12 +121,12 @@ St_M4       = [St_SGainCGLU_HFL St_SGainCHAM_HFL St_SGainCHFL_GLU St_SGainCRF_GL
 St_M5       = [St_LceOffTA St_LGainTA St_FGainSOL_TA];
 
 
-StCtrlPar = [StPreStim St_M1 St_M2 St_M3 St_M4 St_M5];
+StCtrlPar = [StPreExc St_M1 St_M2 St_M3 St_M4 St_M5];
 
 % indexes of control parameters
 St_i = 0;
-parSt_PreS_i    = St_i + 1	: St_i + length(StPreStim);
-St_i = St_i + length(StPreStim);
+parSt_PreE_i    = St_i + 1	: St_i + length(StPreExc);
+St_i = St_i + length(StPreExc);
 parSt_M1_i   	= St_i + 1	: St_i + length(St_M1);
 St_i = St_i + length(St_M1);
 parSt_M2_i      = St_i + 1	: St_i + length(St_M2);
@@ -156,16 +156,16 @@ Sw_phiRef_HFL       = 1.00*phirefHFL;
 Sw_phi2lopt_GLU     = 1.00*rGLU*rhoGLU/loptGLU;
 Sw_phiRef_GLU       = 1.00*phirefGLU;
 
-% Control Parameters (Prestimulations)
-Sw_PreSHFL          = parSwCtrl(1)      *0.01;
-Sw_PreSGLU          = parSwCtrl(2)      *0.01;
-Sw_PreSHAM          = parSwCtrl(3)      *0.01;
-Sw_PreSRF           = parSwCtrl(4)      *0.01;
-Sw_PreSVAS          = parSwCtrl(5)      *0.01;
-Sw_PreSBFSH         = parSwCtrl(6)      *0.01;
-Sw_PreSGAS          = parSwCtrl(7)      *0.01;
-Sw_PreSSOL          = parSwCtrl(8)      *0.01;
-Sw_PreSTA           = parSwCtrl(9)      *0.01;
+% Control Parameters (Pre-excitations)
+Sw_PreEHFL          = parSwCtrl(1)      *0.01;
+Sw_PreEGLU          = parSwCtrl(2)      *0.01;
+Sw_PreEHAM          = parSwCtrl(3)      *0.01;
+Sw_PreERF           = parSwCtrl(4)      *0.01;
+Sw_PreEVAS          = parSwCtrl(5)      *0.01;
+Sw_PreEBFSH         = parSwCtrl(6)      *0.01;
+Sw_PreEGAS          = parSwCtrl(7)      *0.01;
+Sw_PreESOL          = parSwCtrl(8)      *0.01;
+Sw_PreETA           = parSwCtrl(9)      *0.01;
 
 % Swing Phase
 Sw_a_del            = parSwCtrl(10)     *10*pi/180;
@@ -200,9 +200,9 @@ Sw_loffVAS          = parSwCtrl(26)     *0.2;
 Sw_LGainVAS         = parSwCtrl(27)     *0.3;
 
 % pass control parameters to Simulink
-SwPreStim       =   ...
-    [Sw_PreSHFL Sw_PreSGLU Sw_PreSHAM Sw_PreSRF Sw_PreSVAS ...
-    Sw_PreSBFSH Sw_PreSGAS Sw_PreSSOL Sw_PreSTA];
+SwPreExc       =   ...
+    [Sw_PreEHFL Sw_PreEGLU Sw_PreEHAM Sw_PreERF Sw_PreEVAS ...
+    Sw_PreEBFSH Sw_PreEGAS Sw_PreESOL Sw_PreETA];
 
 SwPhasePari     = ...
     [Sw_phi2lopt_BFSH Sw_phiRef_BFSH];
@@ -230,13 +230,13 @@ SwCtrlPar_StP   = ...
     Sw_LGainGLU Sw_loffVAS Sw_LGainVAS];
 
 SwCtrlPar       =   ...
-    [SwPreStim SwPhasePari SwPhaseParii SwCtrlPar_H SwCtrlPar_A ...
+    [SwPreExc SwPhasePari SwPhaseParii SwCtrlPar_H SwCtrlPar_A ...
     SwCtrlPar_Ki SwCtrlPar_Kii SwCtrlPar_Kiii SwCtrlPar_StP];
 
 % indexes of control parameters
 Sw_i = 0;
-parSwPreS_i     = Sw_i + 1	: Sw_i + length(SwPreStim);
-Sw_i = Sw_i + length(SwPreStim);
+parSwPreE_i     = Sw_i + 1	: Sw_i + length(SwPreExc);
+Sw_i = Sw_i + length(SwPreExc);
 parSwPhi_i      = Sw_i + 1	: Sw_i + length(SwPhasePari);
 Sw_i = Sw_i + length(SwPhasePari);
 parSwPhii_i     = Sw_i + 1	: Sw_i + length(SwPhaseParii);

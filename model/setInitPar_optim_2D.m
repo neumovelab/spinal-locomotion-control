@@ -13,7 +13,7 @@ Rphi230             = param_ic(6)      *165*pi/180; %[rad]
 Rphi340             = param_ic(7)      *190*pi/180; %[rad]
 
 % initial delayed data
-init_stim       = 0.01;
+init_exc       = 0.01;
 init_fm         = 0.01;
 init_lce        = 1;
 init_vce        = 0;

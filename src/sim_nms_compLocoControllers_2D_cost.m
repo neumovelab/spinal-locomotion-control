@@ -84,13 +84,17 @@ function f = sim_nms_compLocoControllers_2D_cost(params, sim_params, optim_param
             f = c_0^2 + c_ss;
         end
     else
+        % Speed constraint
         del_x = simout.del_x.Data/cos(gAngle);
         del_t = simout.del_t.Data;
         c_v = max(abs(cost_v_tgt - del_x/del_t)-v_range, 0);
+
+        % Flight phase constraint
+        c_flight = simout.c_flight.data;
     
-        if c_v > 0
+        if c_v > 0 || c_flight > 0
             % STAGE 3:
-            f = c_0 + c_v;
+            f = c_0 + c_v + c_flight;
         else
             c_p  = sum(abs(simout.v_del_pain.Data));
             c_e = simout.del_Act_pow.Data/(del_x*num_muscles);
